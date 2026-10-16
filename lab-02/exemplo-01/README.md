@@ -30,7 +30,8 @@ Quando uma requisição é feita para `message.php`, a aplicação:
    apt-get install -y --no-install-recommends \
            curl \
            unzip \
-           git 
+           git \
+           libzip-dev
    ```
 
    - Instalar extensões do PHP
