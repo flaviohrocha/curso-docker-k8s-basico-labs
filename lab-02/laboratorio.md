@@ -28,7 +28,20 @@ Ao final do laboratório, você deverá ser capaz de:
 
 ## Cenário
 
-O código-fonte utilizado neste laboratório está no repositório [flaviohrocha/spring-petclinic-rest](https://github.com/flaviohrocha/spring-petclinic-rest). Você precisa criar uma imagem executável para a aplicação. O build Maven gera um JAR Spring Boot, mas o Maven e o JDK não são necessários para executar esse JAR em produção.
+O código-fonte utilizado neste laboratório está no repositório [flaviohrocha/spring-petclinic-rest](https://github.com/flaviohrocha/spring-petclinic-rest).
+
+Execute os comandos a seguir no Git Bash ou em outro terminal com Git instalado:
+
+```
+# Clona o repositório
+git clone https://github.com/flaviohrocha/spring-petclinic-rest.git
+
+# Acessa o diretório do projeto
+cd spring-petclinic-rest
+
+```
+
+Você precisa criar uma imagem executável para a aplicação. O build Maven gera um JAR Spring Boot, mas o Maven e o JDK não são necessários para executar esse JAR em produção.
 
 A imagem terá estágios com responsabilidades distintas:
 
@@ -148,7 +161,7 @@ Verifique o estado e os logs da aplicação.
 
 ### 6. Publicar a imagem no Docker Hub pessoal
 
-Identifique a imagem local gerada com o nome do seu usuário do Docker Hub e a tag `lab-02`
+Identifique a imagem local gerada com o nome do seu Docker ID (usuário do Docker Hub) e a tag `1.0.0`
 
 Em seguida realize o push da sua imagem.
 
