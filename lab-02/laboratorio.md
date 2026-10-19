@@ -53,7 +53,8 @@ No desafio final, você adicionará um estágio `test` independente. Ele não de
 
 - **Docker Engine** em execução;
 - acesso ao **Docker Hub** para baixar as imagens-base;
-- Git Bash ou outra shell Bash, ou PowerShell no Windows.
+- Git Bash ou outro shell Bash, ou PowerShell no Windows.
+
 
 ## Tarefas
 
@@ -76,15 +77,11 @@ Se quiser confirmar a versão Java efetiva herdada pelo POM, execute:
 
 No PowerShell, use `./mvnw.cmd` no lugar de `./mvnw`.
 
-> [!IMPORTANT]
-> **Pergunta**  
-> Quais ferramentas são necessárias para compilar a aplicação? Quais são necessárias apenas para executar o JAR?
-
 ---
 
 ### 2. Criar o estágio de build
 
-Crie `Dockerfile` na raiz do projeto e implemente um estágio chamado `build`.
+Crie um arquivo com o nome `Dockerfile` na raiz do projeto e implemente um estágio chamado `build`.
 
 Esse estágio deverá:
 
@@ -102,10 +99,6 @@ Esse estágio deverá:
     </code>
 </details>
 <br>
-
-> [!IMPORTANT]
-> **Pergunta**  
-> O que fica armazenado no cache montado em `/root/.m2`? Esse cache é a mesma coisa que o cache de camadas controlado pelas opções `--no-cache` e `--no-cache-filter`?
 
 ---
 
@@ -132,25 +125,15 @@ Não copie o código-fonte, o Maven, o JDK ou os arquivos locais de `target` par
 </details>
 <br>
 
-
-
-> [!IMPORTANT]
-> **Pergunta**  
-> Quais são as vantagens e os limites de usar uma imagem JRE no estágio final em vez de reutilizar a imagem Maven/JDK?
-
 ---
 
 ### 4. Construir a imagem final
 
-Construa a imagem local e atribua a tag `spring-petclinic-rest:local`.
+Construa a imagem local e atribua a tag `spring-petclinic-api:local`.
 
 Verifique se ela foi criada corretamente.
 
 O build padrão deve produzir a imagem a partir do estágio final `runtime` e de seus estágios dependentes.
-
-> [!IMPORTANT]
-> **Pergunta**  
-> Que relação entre estágios faz o Docker executar um estágio? Qual estágio fornece o JAR ao runtime?
 
 ---
 
@@ -161,10 +144,6 @@ Inicie a aplicação em background, publicando a porta `9966` e usando o nome `p
 Verifique o estado e os logs da aplicação.
 
 
-> [!IMPORTANT]
-> **Pergunta**  
-> Qual é a diferença entre a porta declarada por `EXPOSE` e a publicação da porta feita com `-p` em `docker run`?
-
 ---
 
 ### 6. Publicar a imagem no Docker Hub pessoal
@@ -174,11 +153,6 @@ Identifique a imagem local gerada com o nome do seu usuário do Docker Hub e a t
 Em seguida realize o push da sua imagem.
 
 Acesse o site do [Docker Hub](https://hub.docker.com/) e confira se o upload foi realizado corretamente.
-
-
-> [!IMPORTANT]
-> **Pergunta**  
-> Por que o nome da imagem publicada inclui o nome de usuário do Docker Hub? Por que não devemos informar um token como argumento do comando `docker login`?
 
 ---
 
@@ -200,15 +174,10 @@ Confirme no output o total de testes, falhas, erros, testes ignorados e o result
 </details>
 <br>
 
-
-> [!IMPORTANT]
-> **Pergunta**  
-> Por que nomear um estágio `test` não faz com que ele seja executado automaticamente? O que fazem `--no-cache`, `--progress=plain` e `--output=type=cacheonly` nesse comando? Se o estágio `runtime` passasse a depender de `test`, qual seria o efeito?
-
 Ao concluir o desafio, pare e remova o container criado na tarefa anterior, se ainda estiver ativo.
 
 ---
 
 ## Resultado esperado
 
-Ao concluir a atividade, você terá uma imagem `spring-petclinic-rest:local` para execução, terá publicado uma tag no seu Docker Hub pessoal e, no desafio final, terá adicionado um alvo `test` independente que executa a suíte sem exportar uma imagem de testes.
+Ao concluir a atividade, você terá uma imagem `spring-petclinic-api:local` para execução, terá publicado uma tag no seu Docker Hub pessoal e, no desafio final, terá adicionado um alvo `test` independente que executa a suíte sem exportar uma imagem de testes.
