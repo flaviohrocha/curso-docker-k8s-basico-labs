@@ -1,0 +1,27 @@
+FROM php:8.5-apache
+
+WORKDIR /var/www/html
+
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends \
+        curl \
+        unzip \
+        git \
+        libzip-dev \
+&& docker-php-ext-install pdo pdo_mysql zip \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:lts /usr/bin/composer /usr/local/bin/composer
+
+COPY . .
+
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader
+
+USER www-data
+
+CMD ["apache2-foreground"]

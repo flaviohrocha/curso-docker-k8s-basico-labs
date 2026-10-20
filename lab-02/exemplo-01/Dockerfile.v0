@@ -1,0 +1,35 @@
+FROM php:8.5-apache
+
+WORKDIR /var/www/html
+
+RUN apt-get update
+
+RUN apt-get install -y --no-install-recommends \
+        curl \
+        unzip \
+        git \
+        libzip-dev
+
+RUN docker-php-ext-install pdo pdo_mysql zip 
+
+RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+
+RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+RUN rm -f /tmp/composer-setup.php
+
+RUN apt-get clean
+
+RUN rm -rf /var/lib/apt/lists/*
+
+COPY . .
+
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader
+
+USER www-data
+
+CMD ["apache2-foreground"]
