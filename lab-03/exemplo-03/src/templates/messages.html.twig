@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mensagens</title>
+    <style>
+        :root {
+            --ink: #202a35;
+            --slate: #46525f;
+            --muted: #64707c;
+            --line: #cbd1d7;
+            --surface: #e8ebee;
+            --surface-alt: #f4f5f6;
+        }
+        body {
+            max-width: 48rem;
+            margin: 3rem auto;
+            padding: 0 1rem;
+            color: var(--ink);
+            font: 1rem/1.5 system-ui, sans-serif;
+        }
+        h1 { color: var(--ink); }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 0.75rem; border-bottom: 1px solid var(--line); }
+        th { color: var(--ink); background: var(--surface); }
+        tbody tr:nth-child(even) { background: var(--surface-alt); }
+        .empty { color: var(--muted); }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Mensagens</h1>
+        {% if messages %}
+            <table>
+                <thead>
+                    <tr><th scope="col">ID</th><th scope="col">Mensagem</th></tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                        <tr><td>{{ message.id }}</td><td>{{ message.message }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="empty">Nenhuma mensagem encontrada.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
