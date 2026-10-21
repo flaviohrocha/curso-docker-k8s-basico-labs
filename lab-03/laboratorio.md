@@ -15,8 +15,8 @@ Ao final do laboratório, você deverá ser capaz de:
 
 - Execute os comandos no Git Bash ou outro shell Bash, ou PowerShell no Windows.
 - O Docker Engine deve estar em execução.
-- Construa a imagem `spring-petclinic-api:1.0.0` conforme as instruções do Laboratório 02.
-- Este laboratório usa a imagem local `spring-petclinic-api:1.0.0` e a imagem `postgres:16.3`.
+- Construa a imagem `SEU_DOCKER_ID/spring-petclinic-api:1.0.0` conforme as instruções do Laboratório 02.
+- Este laboratório usa a imagem local `SEU_DOCKER_ID/spring-petclinic-api:1.0.0` e a imagem `postgres:16.3`.
 - Os comandos usam os nomes `petclinic-rest`, `petclinic-db`, `petclinic-data` e `petclinic-net`. Confira se já existem recursos com esses nomes antes de começar.
 - Os comandos usam credenciais de demonstração. Não as reutilize em ambientes reais.
 
@@ -39,7 +39,7 @@ Aplicação → petclinic-db → PostgreSQL
 
 | Imagem | Finalidade |
 | --- | --- |
-| `spring-petclinic-api:1.0.0` | Aplicação REST Spring PetClinic construída no Laboratório 02 |
+| `SEU_DOCKER_ID/spring-petclinic-api:1.0.0` | Aplicação REST Spring PetClinic construída no Laboratório 02 |
 | `postgres:16.3` | Banco de dados PostgreSQL |
 
 ## Tarefas
@@ -69,7 +69,7 @@ docker run -d \
   --env POSTGRES_URL=jdbc:postgresql://host.docker.internal:5432/petclinic \
   --add-host=host.docker.internal:host-gateway \
   -p 9966:9966 \
-  spring-petclinic-api:1.0.0
+  SEU_DOCKER_ID/spring-petclinic-api:1.0.0
 ```
 
 Verifique os containers e os logs.
