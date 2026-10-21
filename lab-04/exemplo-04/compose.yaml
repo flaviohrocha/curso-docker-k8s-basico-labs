@@ -1,0 +1,41 @@
+name: message-app
+services:
+  message-server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: message-server:compose
+    environment:
+      - DB_HOST=message-mariadb
+      - DB_NAME=message
+      - DB_USER=root
+      - DB_PASSWORD=message
+    ports:
+      - 9000:80
+    networks:
+      - message-network
+    depends_on:
+      message-mariadb:
+        condition: service_healthy
+
+  message-mariadb:
+    image: mariadb
+    environment:
+      - MARIADB_DATABASE=message
+      - MARIADB_ROOT_PASSWORD=message
+    volumes:
+      - message-mariadb-vol:/var/lib/mysql
+    networks:
+      - message-network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  message-mariadb-vol:
+
+networks:
+  message-network:
