@@ -1,0 +1,44 @@
+name: petclinic
+
+services:
+  frontend:
+    image: spring-petclinic-ui
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    networks:
+      - petclinic-net
+
+  backend:
+    image: SEU_DOCKER_ID/spring-petclinic-api:1.0.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=postgres,spring-data-jpa
+      - POSTGRES_URL=jdbc:postgresql://database:5432/petclinic
+    ports:
+      - "9966:9966"
+    networks:
+      - petclinic-net
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:16.3
+    env_file:
+      - .env
+    volumes:
+      - petclinic-data:/var/lib/postgresql/data
+    networks:
+      - petclinic-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  petclinic-data:
+
+networks:
+  petclinic-net:
