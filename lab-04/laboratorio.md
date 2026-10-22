@@ -83,7 +83,12 @@ git checkout docker
 Na raiz do projeto:
 
 1. Confirme que o Docker Compose está disponível e identifique os arquivos necessários para construir o frontend.
-2. Crie o arquivo `.env` com as variáveis `POSTGRES_DB`, `POSTGRES_USER` e `POSTGRES_PASSWORD`. Utilize os valores de demonstração indicados pelo instrutor.
+2. Crie o arquivo `.env` com as variáveis `POSTGRES_DB`, `POSTGRES_USER` e `POSTGRES_PASSWORD`. Utilize os valores abaixo:
+```text
+POSTGRES_USER=petclinic
+POSTGRES_PASSWORD=petclinic
+POSTGRES_DB=petclinic
+```
 3. Crie o arquivo `compose.yaml`.
 4. Defina o nome do projeto como `petclinic`.
 5. Declare a seção de serviços e adicione o serviço `frontend`. 
