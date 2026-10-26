@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-in-action-app
+  namespace: exemplo-07
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  revisionHistoryLimit: 4
+  replicas: 12
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: k8s-in-action-app
+  template:
+    metadata:
+      labels:
+        app: k8s-in-action-app
+    spec:
+      containers:
+        - name: app
+          image: flavioh/k8s-in-action
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: MENSAGEM_DESTAQUE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName

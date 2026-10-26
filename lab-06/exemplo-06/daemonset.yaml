@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: k8s-in-action-ds
+  namespace: exemplo-06
+spec:
+  selector:
+    matchLabels:
+      app: k8s-in-action-ds
+  template:
+    metadata:
+      labels:
+        app: k8s-in-action-ds
+    spec:
+      # tolerations:
+      #   - key: node-role.kubernetes.io/control-plane
+      #     operator: Exists
+      #     effect: NoSchedule
+      containers:
+        - name: app
+          image: flavioh/k8s-in-action
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: MENSAGEM_DESTAQUE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
