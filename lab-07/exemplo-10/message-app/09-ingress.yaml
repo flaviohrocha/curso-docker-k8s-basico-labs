@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: message-server
+  namespace: message-app
+  labels:
+    app.kubernetes.io/name: message-server
+    app.kubernetes.io/part-of: message-app
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: message.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: message-server
+                port:
+                  number: 80

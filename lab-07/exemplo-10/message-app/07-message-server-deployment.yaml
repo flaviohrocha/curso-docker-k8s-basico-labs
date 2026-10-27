@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-server
+  namespace: message-app
+  labels:
+    app.kubernetes.io/name: message-server
+    app.kubernetes.io/part-of: message-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: message-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: message-server
+        app.kubernetes.io/part-of: message-app
+    spec:
+      containers:
+        - name: message-server
+          image: flavioh/message-server:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: message-app-secret
+                  key: DB_PASSWORD
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: message-app-config
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: message-app-config
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: message-app-config
+                  key: DB_USER
+          # envFrom:
+          #   - configMapRef:
+          #       name: message-app-config

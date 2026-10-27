@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: message-app-config
+  namespace: message-app
+  labels:
+    app.kubernetes.io/part-of: message-app
+data:
+  DB_HOST: message-mariadb
+  DB_NAME: message
+  DB_USER: root

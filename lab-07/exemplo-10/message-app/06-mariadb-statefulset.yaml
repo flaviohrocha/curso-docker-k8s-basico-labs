@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: message-mariadb
+  namespace: message-app
+  labels:
+    app.kubernetes.io/name: message-mariadb
+    app.kubernetes.io/part-of: message-app
+spec:
+  serviceName: message-mariadb
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: message-mariadb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: message-mariadb
+        app.kubernetes.io/part-of: message-app
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: mariadb
+          image: mariadb:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MARIADB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: message-app-config
+                  key: DB_NAME
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: message-app-secret
+                  key: MARIADB_ROOT_PASSWORD
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: message-mariadb-pvc
