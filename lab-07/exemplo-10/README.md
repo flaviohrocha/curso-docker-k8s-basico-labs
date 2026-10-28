@@ -24,7 +24,7 @@ Ao longo das etapas, você vai:
 1. Inicie o Docker Desktop ou outro runtime de containers compatível com `kind`.
 2. Confirme que `kind` e `kubectl` estão instalados e disponíveis no `PATH`.
 3. Abra um terminal Bash, como Git Bash ou uma distribuição Linux/WSL. Os comandos deste roteiro usam sintaxe Bash; no PowerShell, quebras de linha e comandos de shell podem exigir adaptação.
-4. Coloque os arquivos `kind-config.yaml` e `00-namespace.yaml` a `09-ingress.yaml` no mesmo diretório. O arquivo recebido como `kind-config(1).yaml` deve ser renomeado para `kind-config.yaml`.
+4. Acesse a pasta localizada em `lab-07\exemplo-10` para execução do laboratório.
 5. Confirme que a imagem `flavioh/message-server:1.0.0` está publicada no registry acessível pelo cluster ou disponível para carregamento no `kind`.
 6. Verifique se as portas 80 e 443 do host estão disponíveis.
 
