@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-data
+  namespace: nodejs-health
+  labels:
+    app.kubernetes.io/part-of: nodejs-kubernetes-health
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  volumeName: nodejs-health-redis-pv
+  resources:
+    requests:
+      storage: 1Gi

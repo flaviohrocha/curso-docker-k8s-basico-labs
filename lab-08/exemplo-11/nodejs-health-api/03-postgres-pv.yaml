@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nodejs-health-postgres-pv
+  labels:
+    app.kubernetes.io/part-of: nodejs-kubernetes-health
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /var/lib/kubernetes/nodejs-health/postgres
+    type: DirectoryOrCreate
+  # Ajuste para o hostname do nó que armazena os dados no seu cluster local.
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - lab-worker

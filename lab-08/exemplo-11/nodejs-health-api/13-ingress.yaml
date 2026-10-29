@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: health-api
+  namespace: nodejs-health
+  labels:
+    app.kubernetes.io/name: health-api
+    app.kubernetes.io/part-of: nodejs-kubernetes-health
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: health.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: health-api
+                port:
+                  number: 80

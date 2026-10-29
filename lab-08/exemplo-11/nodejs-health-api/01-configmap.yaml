@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nodejs-health-config
+  namespace: nodejs-health
+  labels:
+    app.kubernetes.io/part-of: nodejs-kubernetes-health
+data:
+  PORT: "3000"
+  REDIS_URL: "redis://redis:6379"
+  PAYMENT_API_HEALTH_URL: "https://httpbin.org/status/200"
