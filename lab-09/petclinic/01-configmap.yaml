@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: petclinic-config
+  namespace: petclinic
+  labels:
+    app.kubernetes.io/part-of: petclinic
+data:
+  SPRING_PROFILES_ACTIVE: "postgres,spring-data-jpa"
+  POSTGRES_URL: "jdbc:postgresql://database:5432/petclinic"
+  REST_API_URL: "http://petclinic.localhost/petclinic/api/"

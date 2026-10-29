@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: petclinic
+  namespace: petclinic
+  labels:
+    app.kubernetes.io/part-of: petclinic
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: petclinic.localhost
+      http:
+        paths:
+          # Rota mais específica: encaminha a API ao backend.
+          - path: /petclinic/api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 9966
+          - path: /petclinic/actuator
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 9966
+          # Demais rotas são encaminhadas ao frontend Angular.
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 8080

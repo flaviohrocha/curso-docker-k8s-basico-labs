@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: petclinic-database-pvc
+  namespace: petclinic
+  labels:
+    app.kubernetes.io/part-of: petclinic
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: petclinic-database-pv

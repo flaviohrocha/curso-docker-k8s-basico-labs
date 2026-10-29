@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: petclinic
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/part-of: petclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/part-of: petclinic
+    spec:
+      initContainers:
+        - name: wait-for-database
+          image: postgres:16.3
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - 'until pg_isready -h database -p 5432 -U "$POSTGRES_USER" -d "$POSTGRES_DB"; do echo "Aguardando PostgreSQL..."; sleep 2; done'
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: petclinic-database-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: petclinic-database-secret
+                  key: POSTGRES_DB
+      containers:
+        - name: backend
+          # Substitua SEU_DOCKER_ID pelo namespace real do Docker Hub/registry.
+          # image: SEU_DOCKER_ID/spring-petclinic-api:1.0.0
+          image: flavioh/spring-petclinic-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9966
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: petclinic-config
+          startupProbe:
+            httpGet:
+              path: /petclinic/actuator/health/liveness
+              port: http
+            periodSeconds: 15
+            timeoutSeconds: 2
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: /petclinic/actuator/health/liveness
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /petclinic/actuator/health/readiness
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 8
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi

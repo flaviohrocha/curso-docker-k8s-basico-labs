@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: petclinic-database-pv
+  labels:
+    app.kubernetes.io/part-of: petclinic
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  # hostPath é adequado somente para laboratório/cluster local simples.
+  # O diretório fica no nó Kubernetes, não necessariamente na máquina do kubectl.
+  hostPath:
+    path: /var/lib/kubernetes/petclinic/postgres
+    type: DirectoryOrCreate
